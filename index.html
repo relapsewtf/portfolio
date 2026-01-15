@@ -1,0 +1,1123 @@
+<!--       /  \./  \/\_
+  __{^\_ _}_   )  }/^\
+ /  /\_/^\._}_/  //  /
+(  (__{(@)}\__}.//_/__A____A_______A________A________A_____A___A___A______
+ \__/{/(_)\_}  )\\ \\---v-----V-----V---Y-----v----Y------v-----V-----v---
+   (   (__)_)_/  )\ \>
+    \__/     \__/\/\/
+       \__,--' -->
+
+<!-- 
+ _______    ______   __    __ ________         ______   __    __ ______  _______             
+|       \  /      \ |  \  |  \        \       /      \ |  \  /  \      \|       \            
+| $$$$$$$\|  $$$$$$\| $$\ | $$\$$$$$$$$      |  $$$$$$\| $$ /  $$\$$$$$$| $$$$$$$\           
+| $$  | $$| $$  | $$| $$$\| $$  | $$         | $$___\$$| $$/  $$  | $$  | $$  | $$           
+| $$  | $$| $$  | $$| $$$$\ $$  | $$          \$$    \ | $$  $$   | $$  | $$  | $$           
+| $$  | $$| $$  | $$| $$\$$ $$  | $$          _\$$$$$$\| $$$$$\   | $$  | $$  | $$           
+| $$__/ $$| $$__/ $$| $$ \$$$$  | $$         |  \__| $$| $$ \$$\ _| $$_ | $$__/ $$           
+| $$    $$ \$$    $$| $$  \$$$  | $$          \$$    $$| $$  \$$\   $$ \| $$    $$           
+ \$$$$$$$   \$$$$$$  \$$   \$$   \$$           \$$$$$$  \$$   \$$\$$$$$$ \$$$$$$$            
+                                                                                             
+                                                                                             
+                                                                                             
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Portfolio | DFIR Enthusiast</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                cursor: none;
+            }
+
+            body {
+                font-family:
+                    "SF Pro Display",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                color: #e0e0e0;
+                overflow-x: hidden;
+                background: #0a0a0a;
+            }
+
+            /* Loading Screen */
+            .loading-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: opacity 0.8s ease;
+            }
+
+            .loading-screen.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .loader-container {
+                text-align: center;
+            }
+
+            .cyber-loader {
+                width: 180px;
+                height: 180px;
+                border: 5px solid rgba(255, 255, 255, 0.1);
+                border-top: 5px solid #ffffff;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 3rem;
+                box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+                position: relative;
+            }
+
+            .cyber-loader::before {
+                content: "";
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                border: 5px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 5px solid #ffffff;
+                border-radius: 50%;
+                animation: spin 1.5s linear infinite reverse;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .loading-text {
+                font-size: 2.5rem;
+                color: #ffffff;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+                animation: pulse 1.5s ease-in-out infinite;
+                margin-bottom: 1.5rem;
+                font-weight: 600;
+            }
+
+            .loading-progress {
+                font-size: 1.5rem;
+                color: rgba(255, 255, 255, 0.8);
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.6;
+                }
+            }
+
+            /* Dancing Cat / Loader Embed */
+            .dancing-cat {
+                width: 240px;
+                height: 240px;
+                margin: 0 auto 1.5rem;
+                position: relative;
+            }
+            .dancing-cat svg,
+            .dancing-cat .loader-embed {
+                width: 100%;
+                height: 100%;
+                display: block;
+                border-radius: 12px;
+            }
+            .dancing-cat svg {
+                animation: dance 0.9s ease-in-out infinite;
+                filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+            }
+            .dancing-cat .loader-embed {
+                border: none;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+                display: none;
+            }
+            .loader-fallback {
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: #fff;
+                font-size: 1.2rem;
+            }
+            @keyframes dance {
+                0% {
+                    transform: translateY(0) rotate(-3deg);
+                }
+                50% {
+                    transform: translateY(-12px) rotate(3deg);
+                }
+                100% {
+                    transform: translateY(0) rotate(-3deg);
+                }
+            }
+
+            /* Reveal-on-scroll */
+            .reveal {
+                opacity: 0;
+                transform: translateY(30px);
+                transition:
+                    opacity 600ms ease,
+                    transform 600ms ease;
+            }
+            .reveal.in-view {
+                opacity: 1;
+                transform: none;
+            }
+
+            /* Project GIF fallback */
+            .project-gif-fallback {
+                width: 180px;
+                height: 180px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: #fff;
+                font-size: 1.2rem;
+                animation: pulse 1.5s ease-in-out infinite;
+            }
+            .project-gif {
+                transition: transform 0.3s ease;
+            }
+            .project-card:hover .project-gif {
+                transform: scale(1.03) translateY(-6px);
+            }
+
+            /* Custom Cursor */
+            .cursor {
+                width: 24px;
+                height: 24px;
+                border: 2px solid #667eea;
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                transition: 0.1s;
+                box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+            }
+
+            .cursor-trail {
+                width: 10px;
+                height: 10px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9998;
+                opacity: 0.6;
+            }
+
+            /* Video Background */
+            .video-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: -2;
+                filter: brightness(0.4) saturate(1.2);
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+                z-index: -1;
+            }
+
+            /* Header */
+            header {
+                padding: 8rem 2rem;
+                text-align: center;
+                background: rgba(10, 10, 10, 0.9);
+                border-bottom: 3px solid #667eea;
+                box-shadow: 0 10px 50px rgba(102, 126, 234, 0.3);
+            }
+
+            .japanese-quote {
+                font-size: 0.9rem;
+                color: #a0a0a0;
+                margin-bottom: 1rem;
+                font-style: italic;
+                letter-spacing: 0.1rem;
+            }
+
+            h1 {
+                font-size: 5.5rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: glow 3s ease-in-out infinite alternate;
+                letter-spacing: 0.3rem;
+                margin-bottom: 1rem;
+                font-weight: 700;
+                display: inline-flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .flag {
+                font-size: 4rem;
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            }
+
+            @keyframes glow {
+                from {
+                    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+                }
+                to {
+                    filter: drop-shadow(0 0 40px rgba(118, 75, 162, 0.8));
+                }
+            }
+
+            .subtitle {
+                font-size: 2.2rem;
+                margin-top: 1.5rem;
+                color: #b0b0b0;
+                letter-spacing: 0.2rem;
+                font-weight: 300;
+            }
+
+            .age-badge {
+                display: inline-block;
+                margin-top: 2.5rem;
+                padding: 1.2rem 2.5rem;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+                border: 2px solid #667eea;
+                border-radius: 15px;
+                font-size: 1.4rem;
+                box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+                backdrop-filter: blur(10px);
+            }
+
+            .main-quote {
+                font-size: 1.6rem;
+                color: #c0c0c0;
+                margin-top: 2.5rem;
+                font-style: italic;
+                max-width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+                line-height: 1.8;
+            }
+
+            /* Container */
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 5rem 3rem;
+            }
+
+            /* About Section */
+            .about-section {
+                background: rgba(10, 10, 10, 0.85);
+                border: 2px solid #667eea;
+                border-radius: 25px;
+                padding: 5rem;
+                margin-bottom: 5rem;
+                box-shadow: 0 10px 50px rgba(102, 126, 234, 0.2);
+                backdrop-filter: blur(10px);
+            }
+
+            .about-section h2 {
+                font-size: 4rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 2rem;
+                font-weight: 700;
+            }
+
+            .about-section .japanese-small {
+                font-size: 0.85rem;
+                color: #808080;
+                margin-bottom: 1.5rem;
+                font-style: italic;
+            }
+
+            .about-section p {
+                font-size: 1.4rem;
+                line-height: 2;
+                color: #d0d0d0;
+                margin-bottom: 2rem;
+            }
+
+            /* Skills Section */
+            .skills-section {
+                background: rgba(10, 10, 10, 0.85);
+                border: 2px solid #667eea;
+                border-radius: 25px;
+                padding: 5rem;
+                margin-bottom: 5rem;
+                box-shadow: 0 10px 50px rgba(102, 126, 234, 0.2);
+                backdrop-filter: blur(10px);
+            }
+
+            .skills-section h2 {
+                font-size: 4rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 3rem;
+                text-align: center;
+                font-weight: 700;
+            }
+
+            .skills-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 3rem;
+                margin-top: 3rem;
+            }
+
+            .skill-card {
+                background: rgba(102, 126, 234, 0.1);
+                border: 2px solid rgba(102, 126, 234, 0.3);
+                border-radius: 20px;
+                padding: 2.5rem;
+                text-align: center;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(5px);
+            }
+
+            .skill-card:hover {
+                transform: translateY(-10px);
+                border-color: #667eea;
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            }
+
+            .skill-icon {
+                font-size: 4rem;
+                margin-bottom: 1.5rem;
+                filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            }
+
+            .skill-card h3 {
+                font-size: 1.6rem;
+                color: #e0e0e0;
+                margin-bottom: 1rem;
+            }
+
+            .skill-card p {
+                font-size: 1.1rem;
+                color: #a0a0a0;
+            }
+
+            /* Projects Section */
+            .projects-section {
+                background: rgba(10, 10, 10, 0.85);
+                border: 2px solid #667eea;
+                border-radius: 25px;
+                padding: 5rem;
+                margin-bottom: 5rem;
+                box-shadow: 0 10px 50px rgba(102, 126, 234, 0.2);
+                backdrop-filter: blur(10px);
+            }
+
+            .projects-section h2 {
+                font-size: 4rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 2rem;
+                font-weight: 700;
+            }
+
+            .project-card {
+                background: rgba(102, 126, 234, 0.05);
+                border: 2px solid rgba(102, 126, 234, 0.3);
+                border-radius: 20px;
+                padding: 3rem;
+                margin-top: 3rem;
+                transition: all 0.3s ease;
+            }
+
+            .project-card:hover {
+                transform: translateY(-5px);
+                border-color: #667eea;
+                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+            }
+
+            .project-header {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                margin-bottom: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .project-gif {
+                width: 180px;
+                height: 180px;
+                border: 2px solid #667eea;
+                border-radius: 15px;
+                object-fit: cover;
+                box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+            }
+
+            .project-title h3 {
+                font-size: 3rem;
+                color: #e0e0e0;
+                margin-bottom: 0.5rem;
+            }
+
+            .project-title p {
+                font-size: 1.3rem;
+                color: #b0b0b0;
+            }
+
+            .project-content h4 {
+                font-size: 2rem;
+                color: #c0c0c0;
+                margin: 2rem 0 1rem 0;
+            }
+
+            .project-content p {
+                font-size: 1.2rem;
+                color: #b0b0b0;
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+            }
+
+            .project-content ul {
+                list-style: none;
+                padding-left: 1rem;
+            }
+
+            .project-content ul li {
+                font-size: 1.2rem;
+                color: #b0b0b0;
+                line-height: 1.8;
+                margin: 0.8rem 0;
+            }
+
+            .project-content ul li:before {
+                content: "→ ";
+                color: #667eea;
+                font-weight: bold;
+                margin-right: 0.5rem;
+            }
+
+            code {
+                background: rgba(102, 126, 234, 0.15);
+                padding: 0.3rem 0.6rem;
+                border-radius: 5px;
+                font-family: "Monaco", "Courier New", monospace;
+                color: #a0a0ff;
+                border: 1px solid rgba(102, 126, 234, 0.3);
+                font-size: 1.1rem;
+            }
+
+            pre {
+                background: rgba(0, 0, 0, 0.7);
+                padding: 1.5rem;
+                border-radius: 10px;
+                overflow-x: auto;
+                border: 2px solid rgba(102, 126, 234, 0.3);
+                margin: 1.5rem 0;
+                font-size: 1.1rem;
+            }
+
+            pre code {
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            /* Journey Section */
+            .journey-section {
+                background: rgba(10, 10, 10, 0.85);
+                border: 2px solid #667eea;
+                border-radius: 27px;
+                padding: 5rem;
+                margin-bottom: 5rem;
+                box-shadow: 0 10px 50px rgba(102, 126, 234, 0.2);
+                backdrop-filter: blur(10px);
+            }
+
+            .journey-section h2 {
+                font-size: 4rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 3rem;
+                font-weight: 700;
+            }
+
+            .journey-section .japanese-small {
+                font-size: 0.85rem;
+                color: #808080;
+                margin-bottom: 1.5rem;
+                font-style: italic;
+            }
+
+            .journey-section p {
+                font-size: 1.4rem;
+                line-height: 2;
+                color: #d0d0d0;
+                margin-bottom: 2rem;
+            }
+
+            .timeline {
+                margin-top: 3rem;
+                padding-left: 2rem;
+                border-left: 3px solid #667eea;
+            }
+
+            .timeline-item {
+                margin-bottom: 3rem;
+                padding-left: 2rem;
+                position: relative;
+            }
+
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -2.55rem;
+                top: 0.5rem;
+                width: 1rem;
+                height: 1rem;
+                background: #667eea;
+                border-radius: 50%;
+                box-shadow: 0 0 15px rgba(102, 126, 234, 0.7);
+            }
+
+            .timeline-item h3 {
+                font-size: 2rem;
+                color: #e0e0e0;
+                margin-bottom: 0.5rem;
+            }
+
+            .timeline-item p {
+                font-size: 1.2rem;
+                color: #b0b0b0;
+            }
+
+            /* Footer */
+            footer {
+                text-align: center;
+                padding: 5rem 2rem;
+                background: rgba(10, 10, 10, 0.9);
+                border-top: 3px solid #667eea;
+                margin-top: 5rem;
+            }
+
+            footer p {
+                font-size: 1.3rem;
+                color: #b0b0b0;
+            }
+
+            .particles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+                opacity: 0.3;
+            }
+            /* Responsive */
+            @media (max-width: 1024px) {
+                h1 {
+                    font-size: 3.5rem;
+                }
+                .skills-grid {
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Loading Screen -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loader-container">
+                <div class="dancing-cat" aria-hidden="true">
+                    <!-- Tenor embed (CS:GO character dancing) -->
+                    <iframe
+                        src="https://tenor.com/embed/1040978251433073922"
+                        class="loader-embed"
+                        title="dancing character"
+                        loading="eager"
+                    ></iframe>
+                    <div class="loader-fallback" id="loaderFallback">🕺 calling my favourite game</div>
+                </div>
+                <div class="loading-text" id="loadingText">ENJOY THE DANCE</div>
+                <div class="loading-progress" id="loadingProgress">0%</div>
+            </div>
+        </div>
+
+        <!-- Custom Cursor -->
+        <div class="cursor"></div>
+
+        <!-- Background Video -->
+        <video class="video-bg" autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2022/11/07/138620-768967208_large.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay"></div>
+
+        <!-- Background Music -->
+        <audio id="bgMusic" loop>
+            <source
+                src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/PinkPantheress/Singles/PinkPantheress_-_Break_It_Off.mp3"
+                type="audio/mpeg"
+            />
+        </audio>
+
+        <header>
+            <div class="japanese-quote">デジタル・フォレンジックは真実を明らかにする</div>
+            <h1><span class="flag">🇨🇭</span> PORTFOLIO</h1>
+            <p class="subtitle">DIGITAL FORENSICS & INCIDENT RESPONSE SPECIALIST</p>
+            <div class="age-badge">14 YEARS OLD | ZÜRICH, SWITZERLAND</div>
+            <p class="main-quote">
+                "The quieter you become, the more you can hear. In DFIR, patience reveals what speed conceals."
+            </p>
+        </header>
+
+        <div class="container">
+            <!-- About Section -->
+            <div class="about-section">
+                <h2>About Me</h2>
+                <div class="japanese-small">証拠は決して嘘をつかない - Evidence never lies</div>
+                <p>
+                    My name is Emmanuel, Emmanuel Schaad. I'm a 14-year-old cybersecurity enthusiast from Zürich,
+                    Switzerland, with a deep passion for Digital Forensics and Incident Response (DFIR). My journey
+                    began at age 10, and since then, I've been like a train without brakes, never losing speed, only
+                    pushing forward to code more, learn more, and dig deeper into the world of cybersecurity.
+                </p>
+                <p>
+                    What started as curiosity has evolved into a relentless pursuit of mastery. I don't just learn-I
+                    immerse myself. Every tool I build, every line of code I write, is a step toward understanding the
+                    digital landscape at its core. DFIR isn't just a field to me; it's a mindset, a way of thinking
+                    critically about systems, threats, and evidence.
+                </p>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="skills-section">
+                <h2>Technical Skills</h2>
+                <div class="japanese-small">技術は武器である - Technology is a weapon</div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-icon">🐍</div>
+                        <h3>Python</h3>
+                        <p>Primary language for DFIR tools and automation</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🌐</div>
+                        <h3>HTML</h3>
+                        <p>Building web-based interfaces and reports</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🎨</div>
+                        <h3>CSS</h3>
+                        <p>Crafting modern, responsive designs</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">⚡</div>
+                        <h3>JavaScript</h3>
+                        <p>Interactive web applications and dynamic content</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">⚙️</div>
+                        <h3>C++</h3>
+                        <p>Currently learning for low-level system programming</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🔍</div>
+                        <h3>DFIR</h3>
+                        <p>Digital forensics, incident response, and malware analysis</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🛡️</div>
+                        <h3>Security Analysis</h3>
+                        <p>Threat detection and vulnerability assessment</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">💾</div>
+                        <h3>Database Forensics</h3>
+                        <p>Parsing and analyzing system artifacts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey Section -->
+            <div class="journey-section">
+                <h2>My Journey</h2>
+                <div class="japanese-small">
+                    旅は目的地ではなく、過程である - The journey is not the destination, but the process
+                </div>
+                <p>
+                    Four years ago, at the age of 10, I discovered cybersecurity, and I've never looked back. What
+                    started with simple curiosity about how computers work evolved into a passion for understanding how
+                    they can be protected, compromised, and analyzed.
+                </p>
+                <p>
+                    I'm like a train without brakes: once I start, I don't stop. I don't lose momentum-I only gain it.
+                    Every project, every challenge, every late-night coding session fuels my drive to go further, to
+                    understand deeper, and to build better tools for the cybersecurity community.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>Age 10 - The Beginning</h3>
+                        <p>
+                            Discovered cybersecurity and fell in love with the field. Started learning Python and basic
+                            security concepts.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Age 11-12 - Building Foundation</h3>
+                        <p>
+                            Dove deep into DFIR methodologies. Started building my first tools for parsing system
+                            artifacts.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Age 13 - Expanding Skills</h3>
+                        <p>
+                            Learned web development (HTML, CSS, JavaScript) to create better interfaces for my tools.
+                            Started understanding malware analysis.
+                        </p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Age 14 - Present Day</h3>
+                        <p>
+                            Released acache, my Windows ActivitiesCache parser. Currently learning C++ for low-level
+                            system programming. Still accelerating, no brakes, only forward.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="projects-section">
+                <h2>Featured Work</h2>
+                <div class="japanese-small">コードは芸術である - Code is art</div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <img src="assets/acache.gif" alt="acache tool animation" class="project-gif" id="acacheGif" />
+                        <div class="project-gif-fallback" id="acacheFallback">acache</div>
+                        <div class="project-title">
+                            <h3>acache</h3>
+                            <p>Windows ActivitiesCache DB Parser for DFIR</p>
+                        </div>
+                    </div>
+
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>
+                            A single-file toolkit designed to parse Windows ActivitiesCache databases for digital
+                            forensics investigations. Built with efficiency and extensibility in mind.
+                        </p>
+
+                        <h4>Quick Start</h4>
+                        <pre><code>python3 acache.py /path/to/activitiescache.db --exportjson out.json</code></pre>
+
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li>Robust parsing with sqlite3.Row for reliable data extraction</li>
+                            <li>Streaming JSON parsing with low memory footprint</li>
+                            <li>CSV and JSON export capabilities</li>
+                            <li>Timeline visualization with matplotlib</li>
+                            <li>Integrated file scanning with maliciousness scoring (0-100)</li>
+                            <li>Generates interactive HTML reports with dark theme</li>
+                            <li>Unit tests and CI/CD integration via GitHub Actions</li>
+                            <li>VirusTotal integration for enhanced threat detection</li>
+                        </ul>
+
+                        <h4>Installation</h4>
+                        <pre><code>python -m pip install -e .</code></pre>
+
+                        <h4>Advanced Usage</h4>
+                        <p>Perform recursive file scanning for suspicious artifacts:</p>
+                        <pre><code>python3 acache.py /path/to/activitiescache.db --filescan /path/to/scan --filescan-recursive --vt-key YOUR_KEY</code></pre>
+
+                        <div class="japanese-small" style="margin-top: 2rem">
+                            真実は常にデータの中にある - The truth is always in the data
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="japanese-small">終わりは新しい始まりである - The end is a new beginning</div>
+            <p>© 2026 Portfolio | Zürich, Switzerland 🇨🇭</p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem; color: #909090">
+                "In DFIR, every byte tells a story, you just have to know how to listen."
+            </p>
+        </footer>
+
+        <script>
+            // start screen
+            let progress = 0;
+            const loadingScreen = document.getElementById("loadingScreen");
+            const loadingProgress = document.getElementById("loadingProgress");
+            const bgMusic = document.getElementById("bgMusic");
+
+            // rotate messages
+            // store loading messages inside the local session storage
+            const loadingTextEl = document.getElementById("loadingText");
+            const loadingMessages = [
+                "dumping ram, nevermind i forgot",
+                "doing homework, please wait",
+                "rebooting my router",
+                "mini eric zimmerman, except i'm a 14 year old",
+                "cs2 is taking forever to download",
+            ];
+
+            (function setLoadingMessage() {
+                if (!loadingTextEl || !window.localStorage || !loadingMessages || loadingMessages.length === 0) return;
+
+                const last = localStorage.getItem("loadingMessageIndex");
+                let idx = Math.floor(Math.random() * loadingMessages.length);
+
+                // ensure that no message is shown more than once in a row
+                if (loadingMessages.length > 1 && last !== null) {
+                    let attempts = 0;
+                    while (idx.toString() === last && attempts < 8) {
+                        idx = Math.floor(Math.random() * loadingMessages.length);
+                        attempts++;
+                    }
+                }
+
+                localStorage.setItem("loadingMessageIndex", idx.toString());
+                loadingTextEl.textContent = loadingMessages[idx];
+            })();
+
+            //  progress
+            const loadingInterval = setInterval(() => {
+                // increment progress by random amount between 1 and 12
+                progress += Math.random() * 12 + 1;
+                const display = Math.min(100, Math.ceil(progress));
+                loadingProgress.textContent = display + "%";
+
+                if (progress >= 100) {
+                    progress = 100;
+                    setTimeout(() => {
+                        loadingScreen.classList.add("hidden");
+                        bgMusic.play().catch((e) => {
+                            document.addEventListener(
+                                "click",
+                                () => {
+                                    bgMusic.play();
+                                },
+                                { once: true }
+                            );
+                        });
+                    }, 600);
+                    clearInterval(loadingInterval);
+                    clearTimeout(fallbackFinish);
+                }
+            }, 180);
+
+            // fallback in case loading takes too long
+            const fallbackFinish = setTimeout(() => {
+                progress = 100;
+                loadingProgress.textContent = "100%";
+                loadingScreen.classList.add("hidden");
+                bgMusic.play().catch(() => {});
+                clearInterval(loadingInterval);
+            }, 8000);
+
+            // cursor (made by chatgpt)
+            const cursor = document.querySelector(".cursor");
+            const trails = [];
+            const trailCount = 8;
+
+            for (let i = 0; i < trailCount; i++) {
+                const trail = document.createElement("div");
+                trail.className = "cursor-trail";
+                document.body.appendChild(trail);
+                trails.push(trail);
+            }
+
+            let mouseX = 0,
+                mouseY = 0;
+            let cursorX = 0,
+                cursorY = 0;
+
+            document.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.15;
+                cursorY += (mouseY - cursorY) * 0.15;
+
+                cursor.style.left = cursorX + "px";
+                cursor.style.top = cursorY + "px";
+
+                trails.forEach((trail, index) => {
+                    const delay = (index + 1) * 0.04;
+                    const trailX = cursorX + (mouseX - cursorX) * delay;
+                    const trailY = cursorY + (mouseY - cursorY) * delay;
+
+                    trail.style.left = trailX + "px";
+                    trail.style.top = trailY + "px";
+                    trail.style.opacity = 0.6 - index * 0.07;
+                });
+
+                requestAnimationFrame(animateCursor);
+            }
+
+            animateCursor();
+
+            // particle effects
+            const canvas = document.createElement("canvas");
+            canvas.className = "particles";
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 80;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 1,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.5 + 0.3,
+                });
+            }
+
+            function drawParticles() {
+                if (!ctx) return; // platform might be nonfunctional so resort to another platform or debug into console
+                try {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    particles.forEach((particle) => {
+                        ctx.beginPath();
+                        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(102, 126, 234, ${particle.opacity})`;
+                        ctx.fill();
+
+                        particle.x += particle.vx;
+                        particle.y += particle.vy;
+
+                        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+                        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+                    });
+
+                    requestAnimationFrame(drawParticles);
+                } catch (err) {
+                    // canva backup, but must stay up.
+                    console.warn("Particle animation disabled:", err);
+                }
+            }
+
+            if (ctx) drawParticles();
+
+            // loader embed
+            (function () {
+                const loaderEmbed = document.querySelector(".loader-embed");
+                const loaderFallback = document.getElementById("loaderFallback");
+                if (loaderEmbed) {
+                    // embed hidden until certain time
+                    loaderEmbed.style.display = "none";
+                    loaderEmbed.addEventListener("load", () => {
+                        if (loaderFallback) loaderFallback.style.display = "none";
+                        loaderEmbed.style.display = "block";
+                    });
+                    // Safety: if embed doesn't load in 3s, keep fallback visible (MADE BY AI NOT BY RELAPSE!!!)
+                    setTimeout(() => {
+                        if (loaderEmbed && loaderEmbed.style.display !== "block") {
+                            if (loaderFallback) loaderFallback.style.display = "flex";
+                        }
+                    }, 3000);
+                }
+            })();
+
+            // wshow acache gif behavior: hide gif if it fails to load, show fallback instead
+            (function () {
+                const acacheGif = document.getElementById("acacheGif");
+                const acacheFallback = document.getElementById("acacheFallback");
+                if (acacheGif) {
+                    acacheGif.addEventListener("load", () => {
+                        if (acacheFallback) acacheFallback.style.display = "none";
+                        acacheGif.style.display = "block";
+                    });
+                    acacheGif.addEventListener("error", () => {
+                        acacheGif.style.display = "none";
+                        if (acacheFallback) acacheFallback.style.display = "flex";
+                    });
+                    if (acacheGif.complete && acacheGif.naturalWidth) {
+                        if (acacheFallback) acacheFallback.style.display = "none";
+                    } else {
+                        // initially hide image until we know
+                        acacheGif.style.display = "none";
+                        if (acacheFallback) acacheFallback.style.display = "flex";
+                    }
+                }
+
+                // scroll = it starts showing more stuff
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("in-view");
+                            }
+                        });
+                    },
+                    { threshold: 0.15 }
+                );
+
+                document
+                    .querySelectorAll(
+                        ".reveal, .about-section, .skills-section, .projects-section, .journey-section, .project-card"
+                    )
+                    .forEach((el) => {
+                        el.classList.add("reveal");
+                        observer.observe(el);
+                    });
+            })();
+
+            window.addEventListener("resize", () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        </script>
+    </body>
+</html>
